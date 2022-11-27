@@ -1,0 +1,13 @@
+.element__description {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  width: 246px;
+  height: 23px;
+}
+
+@media screen and (max-width: 680px) {
+  .element__description {
+    width: calc(100% - 42px);
+  }
+}
