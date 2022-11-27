@@ -25,6 +25,14 @@
 @import url(../blocks/element/__like-button/_active/element__like-button_active.css);
 @import url(../blocks/copyright/copyright.css);
 @import url(../blocks/footer/footer.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/edit-form/edit-form.css);
+@import url(../blocks/edit-form/__input/edit-form__input.css);
+@import url(../blocks/edit-form/__submit-button/edit-form__submit-button.css);
+@import url(../blocks/edit-form/__title/edit-form__title.css);
 
 
 
