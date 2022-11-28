@@ -20,3 +20,12 @@ function closePopup() {
 
 profileEditButton.addEventListener('click', openEditProfile);
 popupCloseButton.addEventListener('click', closePopup);
+
+function handleEditFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = fioInput.value;
+  profileDescription.textContent = descriptionInput.value;
+}
+
+editForm.addEventListener('submit', handleEditFormSubmit);
