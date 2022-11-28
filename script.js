@@ -33,6 +33,8 @@ function handleEditFormSubmit(evt) {
 
   profileName.textContent = fioInput.value;
   profileDescription.textContent = descriptionInput.value;
+
+  closeEditProfile();
 }
 
 editProfileForm.addEventListener('submit', handleEditFormSubmit);
