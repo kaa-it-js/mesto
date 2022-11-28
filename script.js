@@ -1,26 +1,32 @@
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popupCloseButton = document.querySelector('.popup__close-button');
-const popup = document.querySelector('.popup');
-const editForm = document.forms.editForm;
-const fioInput = editForm.elements.fio;
-const descriptionInput = editForm.elements.description;
+const editProfileForm = document.forms.editProfileForm;
+const editProfilePopup = editProfileForm.closest('.popup');
+const editProfilePopupCloseButton = editProfileForm.previousElementSibling;
+const fioInput = editProfileForm.elements.fio;
+const descriptionInput = editProfileForm.elements.description;
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
 const elements = document.querySelector('.elements');
+const addCardForm = document.forms.addCardForm;
+const addCardPopup = addCardForm.closest('.popup');
+const addCardPopupCloseButton = addCardForm.previousElementSibling;
+const cardNameInput = addCardForm.elements.name;
+const cardLinkInput = addCardForm.elements.link;
+const addCardButton = document.querySelector('.profile__add-button');
 
 function openEditProfile() {
   fioInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
 
-  popup.classList.add('popup_opened');
+  editProfilePopup.classList.add('popup_opened');
 }
 
-function closePopup() {
-  popup.classList.remove('popup_opened');
+function closeEditProfile() {
+  editProfilePopup.classList.remove('popup_opened');
 }
 
 profileEditButton.addEventListener('click', openEditProfile);
-popupCloseButton.addEventListener('click', closePopup);
+editProfilePopupCloseButton.addEventListener('click', closeEditProfile);
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
@@ -29,7 +35,7 @@ function handleEditFormSubmit(evt) {
   profileDescription.textContent = descriptionInput.value;
 }
 
-editForm.addEventListener('submit', handleEditFormSubmit);
+editProfileForm.addEventListener('submit', handleEditFormSubmit);
 
 const initialCards = [
   {
@@ -70,3 +76,14 @@ function createCard(name, link) {
 }
 
 initialCards.forEach(({name, link}) => elements.append(createCard(name, link)));
+
+function openCreateCard() {
+  addCardPopup.classList.add('popup_opened');
+}
+
+function closeCreateCard() {
+  addCardPopup.classList.remove('popup_opened');
+}
+
+addCardButton.addEventListener('click', openCreateCard);
+addCardPopupCloseButton.addEventListener('click', closeCreateCard);
