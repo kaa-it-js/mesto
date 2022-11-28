@@ -30,11 +30,22 @@
   <div class="popup">
     <div class="popup__container">
       <button class="popup__close-button"></button>
-      <form class="edit-form" name="editForm">
-        <h2 class="edit-form__title">Редактировать профиль</h2>
-        <input class="edit-form__input" name="fio">
-        <input class="edit-form__input" name="description">
-        <button type="submit" class="edit-form__submit-button">Сохранить</button>
+      <form class="form" name="editProfileForm">
+        <h2 class="form__title">Редактировать профиль</h2>
+        <input class="form__input" name="fio">
+        <input class="form__input" name="description">
+        <button type="submit" class="form__submit-button" name="submitProfile">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__close-button"></button>
+      <form class="form" name="addCardForm">
+        <h2 class="form__title">Новое место</h2>
+        <input class="form__input" name="name" placeholder="Название">
+        <input class="form__input" name="link" placeholder="Ссылка на картинку">
+        <button type="submit" class="form__submit-button" name="submitCard">Создать</button>
       </form>
     </div>
   </div>
