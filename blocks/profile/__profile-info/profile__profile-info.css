@@ -1,12 +1,12 @@
 .profile__profile-info {
-  display: flex;
-  max-width: 336px;
-  flex-wrap: wrap;
+  display: grid;
   row-gap: 16px;
   height: 73px;
   column-gap: 18px;
   align-self: center;
   justify-self: start;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 @media screen and (max-width: 680px) {

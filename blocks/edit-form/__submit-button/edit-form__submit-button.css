@@ -5,10 +5,12 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  display: inline-flex;
+  /* display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   margin-top: 18px;
+  font-family: inherit;
+  color: white;
 }
 
 @media screen and (max-width: 680px) {
