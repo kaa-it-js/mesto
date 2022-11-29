@@ -39,6 +39,18 @@ function handleEditFormSubmit(evt) {
 
 editProfileForm.addEventListener('submit', handleEditFormSubmit);
 
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  const element = createCard(cardNameInput.value, cardLinkInput.value);
+
+  elements.prepend(element);
+
+  closeCreateCard();
+}
+
+addCardForm.addEventListener('submit', handleAddCardFormSubmit);
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -73,6 +85,16 @@ function createCard(name, link) {
   const elementTitle = element.querySelector('.element__title');
   elementImage.src = link;
   elementTitle.textContent = name;
+
+  const likeButton = element.querySelector('.element__like-button');
+
+  likeButton.addEventListener('click', () => likeButton.classList.toggle('element__like-button_active'));
+
+  element.addEventListener('click', function (evt) {
+    if (evt.target.classList.contains('element__trash-button')) {
+      evt.currentTarget.remove();
+    }
+  });
 
   return element;
 }

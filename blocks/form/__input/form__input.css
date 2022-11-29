@@ -8,3 +8,10 @@
   font-size: 14px;
   line-height: 17px;
 }
+
+.form__input:focus {
+  height: 27px;
+  border: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(66, 66, 212, 0.2);
+}
