@@ -1,7 +1,6 @@
 const profileEditButton = document.querySelector('.profile__edit-button');
 const editProfileForm = document.forms.editProfileForm;
 const editProfilePopup = editProfileForm.closest('.popup');
-const editProfilePopupCloseButton = editProfileForm.previousElementSibling;
 const fioInput = editProfileForm.elements.fio;
 const descriptionInput = editProfileForm.elements.description;
 const profileName = document.querySelector('.profile__name');
@@ -9,7 +8,6 @@ const profileDescription = document.querySelector('.profile__description');
 const elements = document.querySelector('.elements');
 const addCardForm = document.forms.addCardForm;
 const addCardPopup = addCardForm.closest('.popup');
-const addCardPopupCloseButton = addCardForm.previousElementSibling;
 const cardNameInput = addCardForm.elements.name;
 const cardLinkInput = addCardForm.elements.link;
 const addCardButton = document.querySelector('.profile__add-button');
@@ -21,12 +19,20 @@ function openEditProfile() {
   editProfilePopup.classList.add('popup_opened');
 }
 
-function closeEditProfile() {
-  editProfilePopup.classList.remove('popup_opened');
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+}
+
+function enableClosePopups() {
+  const popups = Array.from(document.querySelectorAll('.popup'));
+
+  popups.forEach(popup => {
+    const closeButton = popup.querySelector('.popup__close-button');
+    closeButton.addEventListener('click', () => closePopup(popup));
+  });
 }
 
 profileEditButton.addEventListener('click', openEditProfile);
-editProfilePopupCloseButton.addEventListener('click', closeEditProfile);
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
@@ -34,7 +40,7 @@ function handleEditFormSubmit(evt) {
   profileName.textContent = fioInput.value;
   profileDescription.textContent = descriptionInput.value;
 
-  closeEditProfile();
+  closePopup(evt.target.closest('.popup'));
 }
 
 editProfileForm.addEventListener('submit', handleEditFormSubmit);
@@ -46,7 +52,10 @@ function handleAddCardFormSubmit(evt) {
 
   elements.prepend(element);
 
-  closeCreateCard();
+  cardNameInput.value = '';
+  cardLinkInput.value = '';
+
+  closePopup(evt.target.closest('.popup'));
 }
 
 addCardForm.addEventListener('submit', handleAddCardFormSubmit);
@@ -105,9 +114,7 @@ function openCreateCard() {
   addCardPopup.classList.add('popup_opened');
 }
 
-function closeCreateCard() {
-  addCardPopup.classList.remove('popup_opened');
-}
-
 addCardButton.addEventListener('click', openCreateCard);
-addCardPopupCloseButton.addEventListener('click', closeCreateCard);
+
+enableClosePopups();
+
