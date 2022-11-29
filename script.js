@@ -11,6 +11,9 @@ const addCardPopup = addCardForm.closest('.popup');
 const cardNameInput = addCardForm.elements.name;
 const cardLinkInput = addCardForm.elements.link;
 const addCardButton = document.querySelector('.profile__add-button');
+const imagePopupImage = document.querySelector('.image-popup__image');
+const imagePopupName = document.querySelector('.image-popup__name');
+const imagePopup = document.querySelector('.image-popup').closest('.popup');
 
 function openEditProfile() {
   fioInput.value = profileName.textContent;
@@ -87,6 +90,13 @@ const initialCards = [
   }
 ];
 
+function openImagePopup(name, link) {
+  imagePopupImage.src = link;
+  imagePopupName.textContent = name;
+
+  imagePopup.classList.add('popup_opened');
+}
+
 function createCard(name, link) {
   const elementTemplate = document.querySelector('#element-template').content;
   const element = elementTemplate.querySelector('.element').cloneNode(true);
@@ -102,6 +112,10 @@ function createCard(name, link) {
   element.addEventListener('click', function (evt) {
     if (evt.target.classList.contains('element__trash-button')) {
       evt.currentTarget.remove();
+    }
+
+    if (evt.target.classList.contains('element__image')) {
+      openImagePopup(name, link);
     }
   });
 
