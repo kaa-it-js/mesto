@@ -1,6 +1,10 @@
 import { enableValidation, initButtonState } from "./components/validate";
 import { initCards, createCard } from "./components/card";
-import { closePopup, enableClosePopups } from "./components/modal";
+import {
+  closePopup,
+  enableClosePopups,
+  registerEscapeHandler,
+} from "./components/modal";
 import "./pages/index.css";
 
 const validationConfig = {
@@ -33,6 +37,8 @@ profileEditButton.addEventListener("click", () => {
 
   initButtonState(editProfileForm, validationConfig);
 
+  registerEscapeHandler(editProfilePopup);
+
   editProfilePopup.classList.add("popup_opened");
 });
 
@@ -49,6 +55,8 @@ editProfileForm.addEventListener("submit", (evt) => {
 // Open modal to add new card
 addCardButton.addEventListener("click", () => {
   initButtonState(addCardForm, validationConfig);
+
+  registerEscapeHandler(addCardPopup);
 
   addCardPopup.classList.add("popup_opened");
 });
