@@ -1,4 +1,4 @@
-import { enableValidation, initButtonState } from "./components/validate";
+import { enableValidation } from "./components/validate";
 import { initCards, addCardListeners } from "./components/card";
 import { enableClosePopups } from "./components/modal";
 import "./pages/index.css";
