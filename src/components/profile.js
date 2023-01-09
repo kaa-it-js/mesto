@@ -12,7 +12,7 @@ const profileImage = document.querySelector(".profile__image");
 
 let _profile;
 
-export const addProfileListeners = () => {
+export const addProfileListeners = (validationConfig) => {
   // Open modal for edit profile
   profileEditButton.addEventListener("click", () => {
     fioInput.value = profileName.textContent;
