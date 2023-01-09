@@ -60,6 +60,7 @@ export const createCard = (card, { _id }) => {
 
   const likeButton = element.querySelector(".element__like-button");
   const likeCounter = element.querySelector(".element__like-counter");
+  const trashButton = element.querySelector(".element__trash-button");
 
   likeCounter.textContent = String(card.likes.length);
 
@@ -71,9 +72,16 @@ export const createCard = (card, { _id }) => {
     handleLike(likeButton, likeCounter, card._id)
   );
 
+  if (card.owner._id !== _id) {
+    trashButton.classList.add("element__trash-button_hidden");
+  }
+
   element.addEventListener("click", function (evt) {
     if (evt.target.classList.contains("element__trash-button")) {
-      evt.currentTarget.remove();
+      api
+        .deleteCard(card._id)
+        .then(() => element.remove())
+        .catch((err) => console.log(err));
     }
 
     if (evt.target.classList.contains("element__image")) {
@@ -109,6 +117,8 @@ const handleLike = (likeButton, likeCounter, cardId) => {
 const openImagePopup = (name, link) => {
   imagePopupImage.src = link;
   imagePopupName.textContent = name;
+
+  registerEscapeHandler(imagePopup);
 
   imagePopup.classList.add("popup_opened");
 };
