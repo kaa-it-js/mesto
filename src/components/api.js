@@ -40,4 +40,35 @@ export default {
       headers: config.headers,
     }).then(checkResponse);
   },
+
+  updateProfile: (name, about) => {
+    return fetch(`${config.baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: config.headers,
+      body: JSON.stringify({ name, about }),
+    }).then(checkResponse);
+  },
+
+  addCard: (name, link) => {
+    return fetch(`${config.baseUrl}/cards`, {
+      method: "POST",
+      headers: config.headers,
+      body: JSON.stringify({ name, link }),
+    }).then(checkResponse);
+  },
+
+  deleteCard: (cardId) => {
+    return fetch(`${config.baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: config.headers,
+    }).then(checkResponse);
+  },
+
+  updateAvatar: (avatar) => {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: config.headers,
+      body: JSON.stringify({ avatar }),
+    }).then(checkResponse);
+  },
 };
