@@ -1,4 +1,7 @@
 import api from "./api";
+import { initButtonState } from "./validate";
+import { closePopup, registerEscapeHandler } from "./modal";
+import { getProfile } from "./profile";
 
 const elements = document.querySelector(".elements");
 const imagePopupImage = document.querySelector(".image-popup__image");
@@ -9,6 +12,7 @@ const addCardPopup = addCardForm.closest(".popup");
 const cardNameInput = addCardForm.elements.name;
 const cardLinkInput = addCardForm.elements.link;
 const addCardButton = document.querySelector(".profile__add-button");
+const submitCardButton = addCardForm.querySelector(".form__submit-button");
 
 export const initCards = (cards, profile) => {
   console.dir(new Set(cards.flatMap((c) => c.likes.map((like) => like._id))));
@@ -30,14 +34,19 @@ export const addCardListeners = (validationConfig) => {
   addCardForm.addEventListener("submit", (evt) => {
     evt.preventDefault();
 
-    const element = createCard(cardNameInput.value, cardLinkInput.value);
+    submitCardButton.textContent = "Сохранение...";
 
-    elements.prepend(element);
-
-    cardNameInput.value = "";
-    cardLinkInput.value = "";
-
-    closePopup(evt.target.closest(".popup"));
+    api
+      .addCard(cardNameInput.value, cardLinkInput.value)
+      .then((card) => {
+        const element = createCard(card, getProfile());
+        elements.prepend(element);
+        cardNameInput.value = "";
+        cardLinkInput.value = "";
+        closePopup(evt.target.closest(".popup"));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => (submitCardButton.textContent = "Сохранить"));
   });
 };
 
