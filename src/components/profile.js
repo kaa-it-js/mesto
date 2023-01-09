@@ -54,3 +54,5 @@ export const setProfile = (profile) => {
   profileDescription.textContent = _profile.about;
   profileImage.src = _profile.avatar;
 };
+
+export const getProfile = () => _profile;
