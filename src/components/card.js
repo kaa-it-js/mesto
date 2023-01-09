@@ -4,11 +4,41 @@ const elements = document.querySelector(".elements");
 const imagePopupImage = document.querySelector(".image-popup__image");
 const imagePopupName = document.querySelector(".image-popup__name");
 const imagePopup = document.querySelector(".image-popup").closest(".popup");
+const addCardForm = document.forms.addCardForm;
+const addCardPopup = addCardForm.closest(".popup");
+const cardNameInput = addCardForm.elements.name;
+const cardLinkInput = addCardForm.elements.link;
+const addCardButton = document.querySelector(".profile__add-button");
 
 export const initCards = (cards, profile) => {
   console.dir(new Set(cards.flatMap((c) => c.likes.map((like) => like._id))));
   console.log(profile._id);
   cards.forEach((card) => elements.append(createCard(card, profile)));
+};
+
+export const addCardListeners = (validationConfig) => {
+  // Open modal to add new card
+  addCardButton.addEventListener("click", () => {
+    initButtonState(addCardForm, validationConfig);
+
+    registerEscapeHandler(addCardPopup);
+
+    addCardPopup.classList.add("popup_opened");
+  });
+
+  // Add new card
+  addCardForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+
+    const element = createCard(cardNameInput.value, cardLinkInput.value);
+
+    elements.prepend(element);
+
+    cardNameInput.value = "";
+    cardLinkInput.value = "";
+
+    closePopup(evt.target.closest(".popup"));
+  });
 };
 
 export const createCard = (card, { _id }) => {

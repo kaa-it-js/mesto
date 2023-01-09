@@ -1,10 +1,6 @@
 import { enableValidation, initButtonState } from "./components/validate";
-import { initCards, createCard } from "./components/card";
-import {
-  closePopup,
-  enableClosePopups,
-  registerEscapeHandler,
-} from "./components/modal";
+import { initCards, addCardListeners } from "./components/card";
+import { enableClosePopups } from "./components/modal";
 import "./pages/index.css";
 import api from "./components/api";
 import { addProfileListeners, setProfile } from "./components/profile";
@@ -18,39 +14,9 @@ const validationConfig = {
   errorClass: "form__input-error_active",
 };
 
-let user;
+addCardListeners(validationConfig);
 
-const elements = document.querySelector(".elements");
-const addCardForm = document.forms.addCardForm;
-const addCardPopup = addCardForm.closest(".popup");
-const cardNameInput = addCardForm.elements.name;
-const cardLinkInput = addCardForm.elements.link;
-const addCardButton = document.querySelector(".profile__add-button");
-
-addProfileListeners();
-
-// Open modal to add new card
-addCardButton.addEventListener("click", () => {
-  initButtonState(addCardForm, validationConfig);
-
-  registerEscapeHandler(addCardPopup);
-
-  addCardPopup.classList.add("popup_opened");
-});
-
-// Add new card
-addCardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-
-  const element = createCard(cardNameInput.value, cardLinkInput.value);
-
-  elements.prepend(element);
-
-  cardNameInput.value = "";
-  cardLinkInput.value = "";
-
-  closePopup(evt.target.closest(".popup"));
-});
+addProfileListeners(validationConfig);
 
 Promise.all([api.getProfile(), api.getCards()])
   .then(([profile, cards]) => {
