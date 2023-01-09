@@ -1,5 +1,6 @@
 import { initButtonState } from "./validate";
 import { closePopup, registerEscapeHandler } from "./modal";
+import api from "./api";
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editProfileForm = document.forms.editProfileForm;
@@ -9,6 +10,9 @@ const descriptionInput = editProfileForm.elements.description;
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
+const submitProfileButton = editProfileForm.querySelector(
+  ".form__submit-button"
+);
 
 let _profile;
 
@@ -29,10 +33,18 @@ export const addProfileListeners = (validationConfig) => {
   editProfileForm.addEventListener("submit", (evt) => {
     evt.preventDefault();
 
-    profileName.textContent = fioInput.value;
-    profileDescription.textContent = descriptionInput.value;
+    submitProfileButton.textContent = "Сохранение...";
 
-    closePopup(evt.target.closest(".popup"));
+    api
+      .updateProfile(fioInput.value, descriptionInput.value)
+      .then((profile) => {
+        _profile = profile;
+        profileName.textContent = _profile.name;
+        profileDescription.textContent = _profile.about;
+        closePopup(evt.target.closest(".popup"));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => (submitProfileButton.textContent = "Сохранить"));
   });
 };
 
