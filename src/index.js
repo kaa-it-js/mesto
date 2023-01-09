@@ -6,6 +6,8 @@ import {
   registerEscapeHandler,
 } from "./components/modal";
 import "./pages/index.css";
+import api from "./components/api";
+import { addProfileListeners, setProfile } from "./components/profile";
 
 const validationConfig = {
   formSelector: ".form",
@@ -16,13 +18,8 @@ const validationConfig = {
   errorClass: "form__input-error_active",
 };
 
-const profileEditButton = document.querySelector(".profile__edit-button");
-const editProfileForm = document.forms.editProfileForm;
-const editProfilePopup = editProfileForm.closest(".popup");
-const fioInput = editProfileForm.elements.fio;
-const descriptionInput = editProfileForm.elements.description;
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
+let user;
+
 const elements = document.querySelector(".elements");
 const addCardForm = document.forms.addCardForm;
 const addCardPopup = addCardForm.closest(".popup");
@@ -30,27 +27,7 @@ const cardNameInput = addCardForm.elements.name;
 const cardLinkInput = addCardForm.elements.link;
 const addCardButton = document.querySelector(".profile__add-button");
 
-// Open modal for edit profile
-profileEditButton.addEventListener("click", () => {
-  fioInput.value = profileName.textContent;
-  descriptionInput.value = profileDescription.textContent;
-
-  initButtonState(editProfileForm, validationConfig);
-
-  registerEscapeHandler(editProfilePopup);
-
-  editProfilePopup.classList.add("popup_opened");
-});
-
-// Apply new profile data
-editProfileForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-
-  profileName.textContent = fioInput.value;
-  profileDescription.textContent = descriptionInput.value;
-
-  closePopup(evt.target.closest(".popup"));
-});
+addProfileListeners();
 
 // Open modal to add new card
 addCardButton.addEventListener("click", () => {
@@ -75,7 +52,12 @@ addCardForm.addEventListener("submit", (evt) => {
   closePopup(evt.target.closest(".popup"));
 });
 
-initCards();
+Promise.all([api.getProfile(), api.getCards()])
+  .then(([profile, cards]) => {
+    setProfile(profile);
+    initCards(cards, profile);
+  })
+  .catch((err) => console.log(err));
 
 enableClosePopups();
 
