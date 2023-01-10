@@ -13,14 +13,22 @@ const cardNameInput = addCardForm.elements.name;
 const cardLinkInput = addCardForm.elements.link;
 const addCardButton = document.querySelector(".profile__add-button");
 const submitCardButton = addCardForm.querySelector(".form__submit-button");
+const checkRemoveForm = document.forms.checkRemoveForm;
+const checkRemovePopup = checkRemoveForm.closest(".popup");
+const checkRemoveButton = checkRemoveForm.querySelector(".form__submit-button");
 
-export const initCards = (cards, profile) => {
-  console.dir(new Set(cards.flatMap((c) => c.likes.map((like) => like._id))));
-  console.log(profile._id);
+let cardToRemoveId;
+let elementToRemove;
+let _validationConfig;
+
+export const initCards = (cards, profile, validationConfig) => {
+  _validationConfig = validationConfig;
   cards.forEach((card) => elements.append(createCard(card, profile)));
 };
 
 export const addCardListeners = (validationConfig) => {
+  _validationConfig = validationConfig;
+
   // Open modal to add new card
   addCardButton.addEventListener("click", () => {
     initButtonState(addCardForm, validationConfig);
@@ -47,6 +55,22 @@ export const addCardListeners = (validationConfig) => {
       })
       .catch((err) => console.log(err))
       .finally(() => (submitCardButton.textContent = "Сохранить"));
+  });
+
+  // Remove card
+  checkRemoveForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+
+    checkRemoveButton.textContent = "Удаление...";
+
+    api
+      .deleteCard(cardToRemoveId)
+      .then(() => {
+        elementToRemove.remove();
+        closePopup(evt.target.closest(".popup"));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => (checkRemoveButton.textContent = "Да"));
   });
 };
 
@@ -78,10 +102,7 @@ export const createCard = (card, { _id }) => {
 
   element.addEventListener("click", function (evt) {
     if (evt.target.classList.contains("element__trash-button")) {
-      api
-        .deleteCard(card._id)
-        .then(() => element.remove())
-        .catch((err) => console.log(err));
+      handleRemove(card._id, element);
     }
 
     if (evt.target.classList.contains("element__image")) {
@@ -112,6 +133,17 @@ const handleLike = (likeButton, likeCounter, cardId) => {
   }
 
   likeButton.classList.toggle("element__like-button_active");
+};
+
+const handleRemove = (cardId, element) => {
+  initButtonState(checkRemoveForm, _validationConfig);
+
+  registerEscapeHandler(checkRemovePopup);
+
+  cardToRemoveId = cardId;
+  elementToRemove = element;
+
+  checkRemovePopup.classList.add("popup_opened");
 };
 
 const openImagePopup = (name, link) => {
