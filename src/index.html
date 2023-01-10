@@ -117,6 +117,28 @@
         </div>
       </div>
     </div>
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__close-button"></button>
+        <form class="form" name="updateAvatarForm">
+          <h2 class="form__title">Обновить аватар</h2>
+          <label class="form__field">
+            <input
+              id="link-input"
+              class="form__input"
+              type="url"
+              name="link"
+              placeholder="Ссылка на аватар"
+              required
+            />
+            <span class="link-input-error form__input-error"></span>
+          </label>
+          <button type="submit" class="form__submit-button" name="submitAvatar">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>      
     <template id="element-template">
       <article class="element">
         <img class="element__image" src="" alt="Photo" />
