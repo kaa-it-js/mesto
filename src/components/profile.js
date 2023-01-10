@@ -14,6 +14,15 @@ const submitProfileButton = editProfileForm.querySelector(
   ".form__submit-button"
 );
 
+const avatarImage = document.querySelector(".profile__image");
+const updateAvatarForm = document.forms.updateAvatarForm;
+const updateAvatarPopup = updateAvatarForm.closest(".popup");
+const updateAvatarButton = document.querySelector(".profile__rectangle");
+const submitAvatarButton = updateAvatarForm.querySelector(
+  ".form__submit-button"
+);
+const linkInput = updateAvatarForm.elements.link;
+
 let _profile;
 
 export const addProfileListeners = (validationConfig) => {
@@ -45,6 +54,32 @@ export const addProfileListeners = (validationConfig) => {
       })
       .catch((err) => console.log(err))
       .finally(() => (submitProfileButton.textContent = "Сохранить"));
+  });
+
+  // Open modal for update avatar
+  updateAvatarButton.addEventListener("click", () => {
+    initButtonState(updateAvatarForm, validationConfig);
+
+    registerEscapeHandler(updateAvatarPopup);
+
+    updateAvatarPopup.classList.add("popup_opened");
+  });
+
+  // Apply new avatar link
+  updateAvatarForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+
+    submitAvatarButton.textContent = "Сохранение...";
+
+    api
+      .updateAvatar(linkInput.value)
+      .then((_) => {
+        avatarImage.src = linkInput.value;
+        linkInput.value = "";
+        closePopup(evt.target.closest(".popup"));
+      })
+      .catch((err) => console.log(err))
+      .finally(() => (submitAvatarButton.textContent = "Сохранить"));
   });
 };
 
