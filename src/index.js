@@ -21,7 +21,7 @@ addProfileListeners(validationConfig);
 Promise.all([api.getProfile(), api.getCards()])
   .then(([profile, cards]) => {
     setProfile(profile);
-    initCards(cards, profile);
+    initCards(cards, profile, validationConfig);
   })
   .catch((err) => console.log(err));
 
