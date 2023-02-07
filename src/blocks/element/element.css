@@ -1,0 +1,16 @@
+.element {
+    position: relative;
+    width: 282px;
+    height: 361px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+}
+
+@media screen and (max-width: 680px) {
+  .element {
+    width: 100%;
+  }
+}

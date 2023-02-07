@@ -1,0 +1,3 @@
+GET https://mesto.nomoreparties.co/v1/wbf-cohort-3/users/me
+Authorization: e91d2d7a-7934-4811-b5d2-d42326a1cfb9
+Content-Type: application/json

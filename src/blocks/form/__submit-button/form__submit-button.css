@@ -1,0 +1,24 @@
+.form__submit-button {
+  background-color: black;
+  width: 100%;
+  height: 50px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 18px;
+  font-family: inherit;
+  color: white;
+  border-radius: 2px;
+}
+
+.form__submit-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 680px) {
+  .form__submit-button {
+    font-size: 14px;
+    line-height: 17px;
+    height: 46px;
+  }
+}

@@ -1,0 +1,15 @@
+.profile__edit-button {
+  width: 24px;
+  height: 24px;
+  background-color: #000000;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 1px solid #FFFFFF;
+  background-image: url(../../../images/pensil.png);
+  align-self: end;
+}
+
+.profile__edit-button:hover {
+  border-color: #545454;
+  background-image: url(../../../images/pensil-grey.png);
+}
